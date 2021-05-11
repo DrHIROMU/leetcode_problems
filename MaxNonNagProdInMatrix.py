@@ -16,6 +16,8 @@
 
 
 # 如果是r*c的矩陣, 會有C c取(r-1) + C c取1總可能性
+# 此問題要用DP解, 否則效能太差
+
 class Solution(object):
     def maxProductPath(self, grid):
         """
@@ -28,28 +30,22 @@ class Solution(object):
         m = len(grid[0])
         minMax = []
 
-        dp = [[[0] * 2 for i in range(m)] for j in range(n) ]
-        
-        
+        dp = [[[0] * 2 for i in range(m)] for j in range(n)]
+
         # max
         dp[0][0][0] = grid[0][0]
         # min
         dp[0][0][1] = grid[0][0]
 
-        
-
         # init 1st col
         for i in range(1, n):
             dp[i][0][0] = (dp[i - 1][0][0] * grid[i][0])
             dp[i][0][1] = (dp[i - 1][0][1] * grid[i][0])
-        
 
         # init 1st row
         for j in range(1, m):
             dp[0][j][0] = (dp[0][j - 1][0] * grid[0][j])
             dp[0][j][1] = (dp[0][j - 1][1] * grid[0][j])
-
-        
 
         # calcualte matrix
         for i in range(1, n):
@@ -68,7 +64,7 @@ class Solution(object):
                     # grid[i][j] == 0
                     dp[i][j][0] = 0
                     dp[i][j][1] = 0
-        
+
         res = dp[n - 1][m - 1][0]
 
         if res < 0:
@@ -171,6 +167,6 @@ s = Solution()
 #         [2, -4, 4],
 #         [1, -1, -4]]
 
-grid =[[-1, -4, 2], [4, 3, -1], [2, -4, 4], [1, -1, -4]]
+grid = [[-1, -4, 2], [4, 3, -1], [2, -4, 4], [1, -1, -4]]
 ans = s.maxProductPath(grid)
 print(ans)
