@@ -31,15 +31,14 @@ class Solution {
         int numOfFourPersonSeats = 0;
         byte[] availableFourPersonSeats = new byte[n];
 
-        for (int i = 0; i < n; i++) {
-            availableFourPersonSeats[i] = 7;
-        }
-
         for (int i = 0; i < reservedSeats.length; i++) {
             int[] reserveSeat = reservedSeats[i];
             int row = reserveSeat[0] - 1;
             int col = reserveSeat[1] - 1;
-            if(availableFourPersonSeats[row] == 0) continue;
+
+            if(availableFourPersonSeats[row] == 0) availableFourPersonSeats[row] = 7;
+            if(availableFourPersonSeats[row] == -1) continue;
+
             switch (col) {
                 case 1:
                 case 2:
@@ -72,12 +71,15 @@ class Solution {
                     }
                     break;
             }
+            if(availableFourPersonSeats[row] == 0){
+                availableFourPersonSeats[row] = -1;
+            }
         }
 
         for (int i = 0; i < n; i++) {
-            if (availableFourPersonSeats[i] == 7) {
+            if (availableFourPersonSeats[i] == 7 || availableFourPersonSeats[i]== 0) {
                 numOfFourPersonSeats += 2;
-            }else if(availableFourPersonSeats[i] != 0){
+            }else if(availableFourPersonSeats[i] != -1){
                 numOfFourPersonSeats += 1;
             }
         }
