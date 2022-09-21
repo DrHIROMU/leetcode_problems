@@ -1,8 +1,4 @@
-package cinema_seat_allocation1386;
-
-import java.io.FileInputStream;
-import java.io.InputStream;
-import java.util.Properties;
+package cinema_seat_allocation_1386;
 
 
 class Solution {
