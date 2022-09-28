@@ -10,17 +10,18 @@ public class Solution {
     }
 
     public static int concatenatedBinary(int n) {
-        String binStr = "";
-        int result = 0;
-        for(int i=1; i<=n; i++){
-            String numBinStr = Integer.toBinaryString(i);
-            binStr = binStr + numBinStr;
+        /*
+        1 = 1
+        2 = 110
+        3 = 11011
+        4 = 11011100
+         */
+        Long result = 1L;
+        Long len = 4L;
+        for (int i = 2; i <= n; i++) {
+            if(len == i) len *= 2;
+            result = (result*len+i) % 1000000007L;
         }
-        BigInteger decResult = new BigInteger(binStr, 2);
-        BigInteger modNum = BigInteger.valueOf((long)Math.pow(10,9)+7);
-        result = (decResult.mod(modNum).intValue());
-
-        System.out.println(result);
-        return result;
+        return result.intValue();
     }
 }
