@@ -6,20 +6,34 @@ public class Solution {
     }
 
     public ListNode removeNthFromEnd(ListNode head, int n) {
-        ListNode nStepPrev = head;
+        ListNode nthNodeFromEnd = head;
+        ListNode prevNthNodeFromEnd = null;
         ListNode current = head;
-        ListNode tail = head.next;
-        int prevSteps = 0;
+        int stepsFromEnd = 0;
 
-        for(int i=1; i<=n; i++){
-            if(prevSteps < n){
-                prevSteps++;
-            }else{
-                nStepPrev = nStepPrev.next;
+        if(head.next == null && n==1){
+            return null;
+        }
+
+        while(true){
+            current = current.next;
+
+            if(stepsFromEnd < n){
+                stepsFromEnd++;
             }
 
-            if (tail.next == null){
+            if(stepsFromEnd == n){
+                prevNthNodeFromEnd = nthNodeFromEnd;
+                nthNodeFromEnd = nthNodeFromEnd.next;
+            }
 
+            if(current.next == null){
+                if(nthNodeFromEnd == head){
+                    head = head.next;
+                }else {
+                    prevNthNodeFromEnd.next = nthNodeFromEnd.next;
+                }
+                break;
             }
         }
         return head;
