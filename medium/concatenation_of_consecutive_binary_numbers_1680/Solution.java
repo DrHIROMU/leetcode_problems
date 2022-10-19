@@ -1,7 +1,4 @@
-package concatenation_of_consecutive_binary_numbers_1680;
-
-import java.math.BigDecimal;
-import java.math.BigInteger;
+package medium.concatenation_of_consecutive_binary_numbers_1680;
 
 public class Solution {
     public static void main(String[] args){

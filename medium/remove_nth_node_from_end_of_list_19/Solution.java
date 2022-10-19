@@ -1,4 +1,4 @@
-package remove_nth_node_from_end_of_list_19;
+package medium.remove_nth_node_from_end_of_list_19;
 
 public class Solution {
     public static void main(String[] args){

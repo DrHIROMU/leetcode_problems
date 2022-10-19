@@ -1,4 +1,4 @@
-package cinema_seat_allocation_1386;
+package medium.cinema_seat_allocation_1386;
 
 
 class Solution {

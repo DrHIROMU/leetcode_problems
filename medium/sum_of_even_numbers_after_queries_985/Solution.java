@@ -1,4 +1,4 @@
-package sum_of_even_numbers_after_queries_985;
+package medium.sum_of_even_numbers_after_queries_985;
 
 public class Solution {
     public static void main(String[] args){
