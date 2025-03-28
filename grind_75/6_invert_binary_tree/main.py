@@ -8,13 +8,28 @@ class TreeNode:
         self.val = val
         self.left = left
         self.right = right
+        
 class Solution:
     def invertTree(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
-        self.dfs_post_order(root)
-        
+        if root is None:
+            return None
+        self.dfs_invert_tree(root)
+        return root 
+
+    def dfs_invert_tree(self, node: Optional[TreeNode]):        
+        if node.left is None and node.right is None:
+            return
+        if node.left is not None:
+            self.dfs_invert_tree(node.left)
+        if node.right is not None:
+            self.dfs_invert_tree(node.right)        
+        temp = node.left
+        node.left = node.right
+        node.right = temp
     
     def dfs_post_order(self, node: Optional[TreeNode]):
-        if node is None:
+        if node.left is None and node.right is None:
+            print(node.val)
             return
 
         self.dfs_post_order(node.left)
