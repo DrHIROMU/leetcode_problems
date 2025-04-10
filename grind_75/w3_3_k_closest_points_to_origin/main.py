@@ -1,32 +1,57 @@
-#
+# 第一種方式, 用Max heap的方式, 讓heap裡面放入k個元素, 並且照著大到小排列, 
+# 當heap中元素數量大於k, 則把最大的元素pop
+# heapq是min heap, 所以要從大到小排列要把距離取負數
+# 適合n大k小
 
-from collections import deque
+# 第二種方式, quick select, 找出小於pivot的k的數值, best: O(n), worst(n^2), best avg.
+
+import heapq
 from typing import List
 
 class Solution:
     def kClosest(self, points: List[List[int]], k: int) -> List[List[int]]:
-        closest_points = []
+        if k == len(points):
+            return points
+        
+        # result = self.max_heap_solution(points, k)
+        result = self.quick_select_solution(points, k)
 
+        print(result)
+        return result
+
+    def max_heap_solution(self, points: List[List[int]], k: int) -> List[List[int]]:
+        points_heap = []
         for point in points:
             x = point[0]
             y = point[1]
-            sq_distance = x**2 + y**2
-            if len(closest_points) < k:
-                closest_points.append(point)
-            else:
-                max_distance = None
-                max_distance_index = -1
-                for i in range(len(closest_points) - 1, -1, -1):
-                    closest_point = closest_points[i]
-                    closest_distance = closest_point[0]**2+closest_point[1]**2
-                    if max_distance is None or closest_distance > max_distance:
-                        max_distance = closest_distance
-                        max_distance_index = i
-                if max_distance > sq_distance:
-                    closest_points[max_distance_index] = point
+            distance = -(x**2 + y**2)
+            heapq.heappush(points_heap, (distance, point))
+            if len(points_heap) > k:
+                heapq.heappop(points_heap)    
 
-        # print(closest_points)
+        return [point for _, point in points_heap]
+
+    def quick_select_solution(self, points: List[List[int]], k: int) -> List[List[int]]:
+        closest_points = []
+        pivot_index = 0
+
+        while len(closest_points) == k:
+            pivot = points[pivot_index]
+            pivot_distance = pivot[0]**2 + pivot[1]**2
+            for i in range(1, len(points)):
+                point = points[i]
+                distance = point[0]**2 + point[1]**2
+                if distance < pivot_distance:
+                    closest_points.append(point)
+                    
+            if len(closest_points) == k:
+                break
+
+            closest_points = []
+            pivot_index+=1
+
         return closest_points
+
 
 def main():
     points = [[6,10],[-3,3],[-2,5],[0,2]]
