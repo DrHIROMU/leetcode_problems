@@ -1,5 +1,5 @@
-#https://leetcode.com/problems/two-sum/description/
-# Use a dictionary to store the difference between the target and the current number and the index of the current number.
+
+
 class solution:
     def twoSum(self, nums: list[int], target: int) -> list[int]:
         diff = {}
