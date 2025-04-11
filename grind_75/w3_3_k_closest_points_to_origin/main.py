@@ -3,7 +3,10 @@
 # heapq是min heap, 所以要從大到小排列要把距離取負數
 # 適合n大k小
 
-# 第二種方式, quick select, 找出小於pivot的k的數值, best: O(n), worst(n^2), best avg.
+# 第二種方式, quick select, 找出小於pivot的k的數值, 
+# 過程把points較pivot小的數值陸續往左搬, 小於pivot的數量>k則在左半邊找出適當的pivot, 反之則在右邊
+# 直到pivot的index=k, 表示前面k個數值都是較小的
+# best: O(n), worst(n^2), best avg.
 
 import heapq
 from typing import List
@@ -32,26 +35,31 @@ class Solution:
         return [point for _, point in points_heap]
 
     def quick_select_solution(self, points: List[List[int]], k: int) -> List[List[int]]:
-        closest_points = []
-        pivot_index = 0
+        self.quick_select(points, k, 0, len(points)-1)
+              
+        return points[:k]
 
-        while len(closest_points) == k:
-            pivot = points[pivot_index]
-            pivot_distance = pivot[0]**2 + pivot[1]**2
-            for i in range(1, len(points)):
-                point = points[i]
-                distance = point[0]**2 + point[1]**2
-                if distance < pivot_distance:
-                    closest_points.append(point)
-                    
-            if len(closest_points) == k:
-                break
+    def quick_select(self, points: List[List[int]], k: int, left: int, right: int):
+        pivot_distance = points[left][0]**2 + points[left][1]**2
 
-            closest_points = []
-            pivot_index+=1
+        if left >= right:
+            return
 
-        return closest_points
+        i = left+1
+        for j in range(left+1, right):
+            distance = points[j][0]**2 + points[j][1]**2
+            if distance < pivot_distance:
+                points[i], points[j] = points[j], points[i]
+                i+=1
 
+        points[left], points[i] = points[i], points[left]
+
+        if i==k:
+            return
+        elif i < k:
+            self.quick_select_solution(points, k, i+1, right)
+        else:
+            self.quick_select_solution(points, k, 0, right-1)
 
 def main():
     points = [[6,10],[-3,3],[-2,5],[0,2]]
